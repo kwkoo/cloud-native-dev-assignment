@@ -1,0 +1,1 @@
+curl http://gateway-service-user2-freelance.apps.f4ca.openshift.opentlc.com/gateway/freelancers/1

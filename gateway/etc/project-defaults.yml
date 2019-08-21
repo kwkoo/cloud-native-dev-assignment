@@ -1,0 +1,3 @@
+freelancer:
+  service:
+    url: http://freelancer:8080

@@ -4,7 +4,7 @@ PROJECT=user2-freelance
 PROJ_DB_USERNAME=mongo
 PROJ_DB_PASSWORD=mongo
 
-.PHONY: deployproject projectcm mongo deployfreelancer postgres clean
+.PHONY: deployproject projectcm mongo deployfreelancer postgres deploygateway clean
 
 deployproject: projectcm
 	-oc new-project $(PROJECT)
@@ -41,6 +41,16 @@ postgres:
 	  centos/postgresql-10-centos7 \
 	  --name=freelancer-postgresql \
 	  -n $(PROJECT)
+
+gatewaycm:
+	-oc delete configmap/gateway-service -n $(PROJECT)
+	oc create configmap gateway-service --from-file=gateway/etc/project-defaults.yml -n $(PROJECT)
+
+deploygateway: gatewaycm
+	-oc new-project $(PROJECT)
+	cd gateway \
+	&& \
+	mvn clean fabric8:deploy -Popenshift -Dfabric8.namespace=$(PROJECT) -Dfabric8.openshift.deployTimeoutSeconds=120 -DskipTests
 
 clean:
 	-oc delete project $(PROJECT)
