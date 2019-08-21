@@ -1,3 +1,6 @@
 freelancer:
   service:
     url: http://freelancer-user2-freelance.apps.f4ca.openshift.opentlc.com
+projects:
+  service:
+    url: http://project-service-user2-freelance.apps.f4ca.openshift.opentlc.com

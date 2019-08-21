@@ -52,5 +52,38 @@ public class GatewayTest {
         }
     }
     
+    @Test
+    public void getSingleProject() throws Exception {
+        assertThat(gatewayService, notNullValue());
+        Object project = gatewayService.getSingleProject("1");
+        assertThat(project, notNullValue());
+        assertThat(project.toString(), containsString("projectId"));
+        assertThat(project.toString(), containsString("ownerFirstName"));
+        assertThat(project.toString(), containsString("ownerLastName"));
+    }
+
+    @Test
+    public void getAllProjects() throws Exception {
+        assertThat(gatewayService, notNullValue());
+        List projects = gatewayService.getAllProjects();
+        assertThat(projects, notNullValue());
+        for (Object o : projects) {
+            assertThat(o.toString(), containsString("projectId"));
+            assertThat(o.toString(), containsString("ownerFirstName"));
+            assertThat(o.toString(), containsString("ownerLastName"));
+        }
+    }
+
+    @Test
+    public void getProjectsStatus() throws Exception {
+        assertThat(gatewayService, notNullValue());
+        List projects = gatewayService.getProjectsStatus("open");
+        assertThat(projects, notNullValue());
+        for (Object o : projects) {
+            assertThat(o.toString(), containsString("projectId"));
+            assertThat(o.toString(), containsString("ownerFirstName"));
+            assertThat(o.toString(), containsString("ownerLastName"));
+        }
+    }
 }
 

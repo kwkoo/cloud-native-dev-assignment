@@ -1,3 +1,6 @@
 freelancer:
   service:
     url: http://freelancer:8080
+projects:
+  service:
+    url: http://project-service:8080
