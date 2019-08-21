@@ -1,0 +1,2 @@
+curl http://freelancer-user2-freelance.apps.f4ca.openshift.opentlc.com/freelancers
+curl http://freelancer-user2-freelance.apps.f4ca.openshift.opentlc.com/freelancers/1

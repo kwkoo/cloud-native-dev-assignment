@@ -4,7 +4,7 @@ PROJECT=user2-freelance
 PROJ_DB_USERNAME=mongo
 PROJ_DB_PASSWORD=mongo
 
-.PHONY: deployproject projectcm mongo postgres clean
+.PHONY: deployproject projectcm mongo deployfreelancer postgres clean
 
 deployproject: projectcm
 	-oc new-project $(PROJECT)
@@ -26,15 +26,21 @@ mongo:
 	| \
 	oc apply -f - -n $(PROJECT)
 
+deployfreelancer:
+	-oc new-project $(PROJECT)
+	cd freelancer \
+	&& \
+	mvn clean fabric8:deploy -Popenshift -Dfabric8.namespace=$(PROJECT) -Dfabric8.openshift.deployTimeoutSeconds=120 -DskipTests
+
 postgres:
 	-oc new-project $(PROJECT)
-	oc process \
-	  -f freelancer/yaml/freelancer-service-postgresql-persistent.yaml \
-	  -p FREELANCER_DB_USERNAME=jboss \
-	  -p FREELANCER_DB_PASSWORD=jboss \
-	  -p FREELANCER_DB_NAME=freelancerdb \
-	| \
-	oc apply -f - -n $(PROJECT)
+	oc new-app \
+	  -e POSTGRESQL_USER=jboss \
+	  -e POSTGRESQL_PASSWORD=jboss \
+	  -e POSTGRESQL_DATABASE=freelancerdb \
+	  centos/postgresql-10-centos7 \
+	  --name=freelancer-postgresql \
+	  -n $(PROJECT)
 
 clean:
 	-oc delete project $(PROJECT)
