@@ -4,7 +4,7 @@ PROJECT=user2-freelance
 PROJ_DB_USERNAME=mongo
 PROJ_DB_PASSWORD=mongo
 
-.PHONY: deployproject projectcm mongo clean
+.PHONY: deployproject projectcm mongo postgres clean
 
 deployproject: projectcm
 	-oc new-project $(PROJECT)
@@ -23,6 +23,16 @@ mongo:
 	  -f project/yaml/project-mongodb.yaml \
 	  -p PROJECT_DB_USERNAME=$(PROJ_DB_USERNAME) \
 	  -p PROJECT_DB_PASSWORD=$(PROJ_DB_PASSWORD) \
+	| \
+	oc apply -f - -n $(PROJECT)
+
+postgres:
+	-oc new-project $(PROJECT)
+	oc process \
+	  -f freelancer/yaml/freelancer-service-postgresql-persistent.yaml \
+	  -p FREELANCER_DB_USERNAME=jboss \
+	  -p FREELANCER_DB_PASSWORD=jboss \
+	  -p FREELANCER_DB_NAME=freelancerdb \
 	| \
 	oc apply -f - -n $(PROJECT)
 
