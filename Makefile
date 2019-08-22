@@ -20,8 +20,8 @@ deployproject: projectcm
 
 projectcm:
 	-oc delete configmap/project-service -n $(PROJECT)
-	sed -i 's/username: .*/username: "$(PROJ_DB_USERNAME)"/' project/etc/app-config.yml
-	sed -i 's/password: .*/password: "$(PROJ_DB_PASSWORD)"/' project/etc/app-config.yml
+	sed -i '' 's/username: .*/username: "$(PROJ_DB_USERNAME)"/' project/etc/app-config.yml
+	sed -i '' 's/password: .*/password: "$(PROJ_DB_PASSWORD)"/' project/etc/app-config.yml
 	oc create configmap project-service --from-file=project/etc/app-config.yml -n $(PROJECT)
 
 mongo:
@@ -35,8 +35,8 @@ mongo:
 
 deployfreelancer:
 	-oc new-project $(PROJECT)
-	sed -i 's/user: .*/user: "$(FREELANCE_DB_USERNAME)"/' freelancer/src/main/fabric8/credentials-secret.yml
-	sed -i 's/password: .*/password: "$(FREELANCE_DB_PASSWORD)"/' freelancer/src/main/fabric8/credentials-secret.yml
+	sed -i '' 's/user: .*/user: "$(FREELANCE_DB_USERNAME)"/' freelancer/src/main/fabric8/credentials-secret.yml
+	sed -i '' 's/password: .*/password: "$(FREELANCE_DB_PASSWORD)"/' freelancer/src/main/fabric8/credentials-secret.yml
 	cd freelancer \
 	&& \
 	mvn clean fabric8:deploy -Popenshift -Dfabric8.namespace=$(PROJECT) -Dfabric8.openshift.deployTimeoutSeconds=120 -DskipTests
