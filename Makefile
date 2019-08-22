@@ -5,8 +5,9 @@ PROJ_DB_USERNAME=mongo
 PROJ_DB_PASSWORD=mongo
 FREELANCE_DB_USERNAME=jboss
 FREELANCE_DB_PASSWORD=jboss
+GATEWAY=http://$(shell oc get route/gateway-service -n $(PROJECT) --template='{{.spec.host}}')
 
-.PHONY: all deployproject projectcm mongo deployfreelancer postgres deploygateway clean
+.PHONY: all deployproject projectcm mongo deployfreelancer postgres deploygateway clean curl
 
 all: mongo deployproject postgres deployfreelancer deploygateway
 	echo "Done"
@@ -63,3 +64,24 @@ deploygateway: gatewaycm
 
 clean:
 	-oc delete project $(PROJECT)
+
+curl:
+	@echo "Testing /gateway/freelancers"
+	curl $(GATEWAY)/gateway/freelancers
+	@echo
+	@echo
+	@echo "Testing /gateway/freelancers/1"
+	curl $(GATEWAY)/gateway/freelancers/1
+	@echo
+	@echo
+	@echo "Testing /gateway/projects"
+	curl $(GATEWAY)/gateway/projects
+	@echo
+	@echo
+	@echo "Testing /gateway/projects/1"
+	curl $(GATEWAY)/gateway/projects/1
+	@echo
+	@echo
+	@echo "Testing /gateway/projects/status/open"
+	curl $(GATEWAY)/gateway/projects/status/open
+	@echo
