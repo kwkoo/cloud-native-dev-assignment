@@ -1,5 +1,0 @@
-curl http://gateway-service-user2-freelance.apps.f4ca.openshift.opentlc.com/gateway/freelancers/1
-curl http://gateway-service-user2-freelance.apps.f4ca.openshift.opentlc.com/gateway/freelancers
-curl http://gateway-service-user2-freelance.apps.f4ca.openshift.opentlc.com/gateway/projects
-curl http://gateway-service-user2-freelance.apps.f4ca.openshift.opentlc.com/gateway/projects/1
-curl http://gateway-service-user2-freelance.apps.f4ca.openshift.opentlc.com/gateway/projects/status/open
